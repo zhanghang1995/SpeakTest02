@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()){
             case R.id.speak_text:
                 //startSpeechDialog();
+                ToastUtils.ShowToast(Utils.getUserDeviceID(this),this);
                 speak_model.startSpeech(getApplicationContext());
                 break;
             case R.id.text_speech:

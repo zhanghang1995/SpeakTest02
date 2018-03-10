@@ -11,6 +11,7 @@ import android.telephony.TelephonyManager;
 
 import java.io.File;
 import java.security.MessageDigest;
+import java.security.Permission;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -21,7 +22,10 @@ import java.util.Locale;
  */
 
 public class Utils {
+    //用户所需要的相关权限
+    static final String [] PERMISSIONS = new String[]{
 
+    };
     //用于判断当前的输入的字符串是否为空
     public static boolean isStringEmpty(String input) {
         if (input == null || "".equals(input))
@@ -109,11 +113,7 @@ public class Utils {
         TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 
         try{
-            if(true) {
-                imeistring = telephonyManager.getDeviceId();
-            }else{
-                ToastUtils.ShowToast("未获取IMEI权限",context);
-            }
+            imeistring = telephonyManager.getDeviceId();
         }catch ( SecurityException e){
             e.printStackTrace();
         }

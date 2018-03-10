@@ -1,6 +1,8 @@
 package com.example.a74993.speaktest02.utils;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.support.v4.content.ContextCompat;
 
 /**
  * 此类用于检查用户权限
@@ -12,5 +14,17 @@ public class PermissionChecker {
     public PermissionChecker(Context context){
         mcontext = context;
     }
+    //判断权限集合
+    public boolean lacksPermissions(String... permisions){
+        for(String permission : permisions){
+            if(lacksPermissions(permission))
+                return true;
+        }
+        return false;
+    }
 
+    //判断是否缺少权限
+    private boolean lacksPermission(String permission){
+        return ContextCompat.checkSelfPermission(mcontext,permission) == PackageManager.PERMISSION_DENIED;
+    }
 }

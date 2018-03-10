@@ -8,14 +8,18 @@ package com.example.a74993.speaktest02.utils;
 public class Constant {
     public static final String TAG = "log_i";
     //定义网络文件下载的请求
-    public static String FILE_UPLOAD = "";
-    //定义网络文件上传的请求
     public static String FILE_DOWNLOAD = "";
+    //定义网络文件上传的请求
+    public static String FILE_UPLOAD = "";
+    //定义图片文件下载的请求
+    public static String _DOWNLOAD = "";
+    //定义图片文件上传的请求
+    public static String IMAGE_UPLOAD = "";
     //定义全局的URL
     public static String URL = "";
     //定义声音文件处理的URL
     public static final String SPEECH_UPLOAD= "";
-    //定义声音文件上传的URL
+    //定义声音文件处理结果的URL
     public static final String SPEECH_DOWNLOAD = "";
 
 }
