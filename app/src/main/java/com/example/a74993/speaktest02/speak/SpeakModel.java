@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 
+import com.example.a74993.speaktest02.speak.speak_tackle.SpeechUpload;
 import com.example.a74993.speaktest02.utils.Constant;
 import com.example.a74993.speaktest02.utils.JsonParser;
 import com.example.a74993.speaktest02.utils.ToastUtils;
@@ -53,8 +54,10 @@ public class SpeakModel {
         public void onResult(RecognizerResult results, boolean isLast) {
             speakresult = speakresult + JsonParser.parseIatResult(results.getResultString());
             if(isLast){
-                ToastUtils.ShowToast(speakresult,context_this);
-                System.out.println(Utils.getDataTime(20180806));
+                SpeechUpload.upload(speakresult,context_this);
+                speakresult = "";
+//                ToastUtils.ShowToast("手机识别"+speakresult,context_this);
+//                System.out.println(Utils.getDataTime(20180806));
 //               用于调用手机的电话    Utils.intentCallTel(context_this,speakresult);
             }
         }

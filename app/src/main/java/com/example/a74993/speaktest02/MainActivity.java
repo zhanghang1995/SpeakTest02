@@ -7,16 +7,26 @@ import android.widget.Button;
 import android.widget.EditText;
 
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.example.a74993.speaktest02.net.VolleyMethod;
 import com.example.a74993.speaktest02.speak.SpeakModel;
 import com.example.a74993.speaktest02.speak.TextConvery;
+import com.example.a74993.speaktest02.speak.speak_tackle.SpeechUpload;
+import com.example.a74993.speaktest02.utils.Constant;
 import com.example.a74993.speaktest02.utils.ToastUtils;
 import com.example.a74993.speaktest02.utils.Utils;
+import com.example.a74993.speaktest02.utils.VolleyApplication;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechUtility;
 
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+    private String resultword;
     private EditText edit_input;
     private Button speak;
     private Button text;
@@ -52,12 +62,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()){
             case R.id.speak_text:
                 //startSpeechDialog();
-                ToastUtils.ShowToast(Utils.getUserDeviceID(this),this);
+                //ToastUtils.ShowToast(Utils.getUserDeviceID(this),this);
                 speak_model.startSpeech(getApplicationContext());
+//                VolleyMethod volleyMethod = new VolleyMethod(getApplicationContext());
+//                volleyMethod.teststringPost(Constant.SPEECH_UPLOAD);
                 break;
             case R.id.text_speech:
                 text_convery.speakText(edit_input.getText().toString(),getApplicationContext());
                 break;
         }
     }
+
 }

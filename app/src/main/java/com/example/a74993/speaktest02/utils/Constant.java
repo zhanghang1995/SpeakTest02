@@ -18,8 +18,12 @@ public class Constant {
     //定义全局的URL
     public static String URL = "";
     //定义声音文件处理的URL
-    public static final String SPEECH_UPLOAD= "";
+    public static final String SPEECH_UPLOAD= "http://192.168.0.122:5000/speak/deal";
     //定义声音文件处理结果的URL
     public static final String SPEECH_DOWNLOAD = "";
+    //语音系统完成语言输入
+    public static final String FINISHE_WORD = "讲完啦";
+    //语言系统用于转换用户的输入
+    public static final String FINISHE_SPEAK = "换完了";
 
 }

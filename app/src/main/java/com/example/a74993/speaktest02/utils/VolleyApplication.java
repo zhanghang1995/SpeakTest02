@@ -16,7 +16,8 @@ public class VolleyApplication extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
-        requestQueue = Volley.newRequestQueue(getApplicationContext());//实例化请求队列
+        if(requestQueue!=null)
+            requestQueue = Volley.newRequestQueue(getApplicationContext());//实例化请求队列
     }
     public static RequestQueue getRequestQueue(){
         return requestQueue;//返回一个请求队列

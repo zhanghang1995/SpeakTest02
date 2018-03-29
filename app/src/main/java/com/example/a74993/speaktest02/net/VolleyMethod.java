@@ -1,18 +1,28 @@
 package com.example.a74993.speaktest02.net;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.a74993.speaktest02.speak.TextConvery;
 import com.example.a74993.speaktest02.utils.BitmapCache;
+import com.example.a74993.speaktest02.utils.LogInfo;
+import com.example.a74993.speaktest02.utils.ToastUtils;
 import com.example.a74993.speaktest02.utils.VolleyApplication;
 
 import org.json.JSONObject;
+
+import java.util.HashMap;
 
 /**
  * 定义volley框架用户语言识别少量文字的上传与下载
@@ -22,6 +32,15 @@ import org.json.JSONObject;
  */
 
 public class VolleyMethod {
+    private TextConvery text_convery = new TextConvery();
+    private Context context_this;
+    private RequestQueue requestQueue;
+    public String resultword = "未找到信息!";
+    public VolleyMethod(Context context)
+    {
+        context_this = context;
+        requestQueue = Volley.newRequestQueue(context);
+    }
     //用于JsonObjectPost的进行请求
     public void jsonPost(String url){
         //null 处存放JsonObject对象
@@ -39,20 +58,40 @@ public class VolleyMethod {
         VolleyApplication.getRequestQueue().add(jsonObjectRequest);
     }
 
+
     //对StringRequset的请求
-    public void stringPost(String url){
+    public String  stringPost(String url,String speakwords){
+        final String words = speakwords;
+        //断点测试
+        LogInfo.e(words);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 // 此处返回String对象，对response进行处理
+                resultword = response.toString();
+                text_convery.speakText(resultword,context_this);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // 错误时候的回掉方法
+                LogInfo.e("访问错误");
+                ToastUtils.ShowToast("ERROR",context_this);
             }
-        });
-        VolleyApplication.getRequestQueue().add(stringRequest);
+        })
+        {
+            //参数携带，当发出POST请求的时候，volley会尝试调用StringRequest的父类
+            //Request中的getParams()方法来获取POST参数
+            @Override
+            protected HashMap<String,String> getParams()
+                    throws AuthFailureError {
+                HashMap<String,String> hashMap = new HashMap<String,String>();
+                hashMap.put("userwords",words);
+                return hashMap;
+            }
+        };
+        requestQueue.add(stringRequest);
+        return  resultword;
     }
 
     //用于对轻量级的图片文件加载，加载时结合Bitmap缓存(暂定)
