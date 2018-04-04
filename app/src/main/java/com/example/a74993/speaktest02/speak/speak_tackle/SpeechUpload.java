@@ -11,9 +11,9 @@ import com.example.a74993.speaktest02.utils.Constant;
  */
 
 public class SpeechUpload {
-    public static void upload(String speakwords,Context context)
+    public static void upload(String speakwords,Context context,int type)
     {
         VolleyMethod volleyMethod = new VolleyMethod(context);
-        volleyMethod.stringPost(Constant.SPEECH_UPLOAD,speakwords);
+        volleyMethod.stringPost(Constant.SPEECH_UPLOAD,speakwords,type);
     }
 }

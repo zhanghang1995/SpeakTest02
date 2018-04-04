@@ -8,10 +8,9 @@ import android.util.Log;
  */
 
 public class LogInfo {
-    private static final String TAG = "";
     private static boolean DEBUG = true;
 
-    public static void e(String message){
+    public static void e(String TAG,String message){
         if(DEBUG)
             Log.e(TAG,message);
     }

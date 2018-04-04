@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 
+import com.example.a74993.speaktest02.MainActivity;
 import com.example.a74993.speaktest02.speak.speak_tackle.SpeechUpload;
 import com.example.a74993.speaktest02.utils.Constant;
 import com.example.a74993.speaktest02.utils.JsonParser;
@@ -24,10 +25,12 @@ import com.iflytek.cloud.SpeechRecognizer;
 public class SpeakModel {
     private String speakresult = "";
     private Context context_this;
+    private int TYPE;
     /**
      *语音识别
      */
-    public void startSpeech(Context context){
+    public void startSpeech(Context context,int type){
+        TYPE = type;
         context_this  = context;
         //1. 创建SpeechRecognizer对象，第二个参数： 本地识别时传 InitListener
         SpeechRecognizer speechRecognizer = SpeechRecognizer.createRecognizer( context, null); //语音识别器
@@ -52,9 +55,13 @@ public class SpeakModel {
         //关于解析Json的代码可参见 Demo中JsonParser 类；
         //isLast等于true 时会话结束。
         public void onResult(RecognizerResult results, boolean isLast) {
+
             speakresult = speakresult + JsonParser.parseIatResult(results.getResultString());
-            if(isLast){
-                SpeechUpload.upload(speakresult,context_this);
+            if(isLast&&TYPE==0){
+                /**
+                 * 用户语音的逻辑判断,在后台判断并且返回
+                 */
+                SpeechUpload.upload(speakresult,context_this,TYPE);
                 speakresult = "";
 //                ToastUtils.ShowToast("手机识别"+speakresult,context_this);
 //                System.out.println(Utils.getDataTime(20180806));

@@ -16,6 +16,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.a74993.speaktest02.speak.TextConvery;
 import com.example.a74993.speaktest02.utils.BitmapCache;
+import com.example.a74993.speaktest02.utils.Constant;
 import com.example.a74993.speaktest02.utils.LogInfo;
 import com.example.a74993.speaktest02.utils.ToastUtils;
 import com.example.a74993.speaktest02.utils.VolleyApplication;
@@ -60,22 +61,23 @@ public class VolleyMethod {
 
 
     //对StringRequset的请求
-    public String  stringPost(String url,String speakwords){
-        final String words = speakwords;
+    public String  stringPost(String url, String speakwords, final int type){
+        final String words = speakwords.trim();
+        final String  wordsType = Integer.toString(type);
         //断点测试
-        LogInfo.e(words);
+        LogInfo.e(Constant.TAG,words);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 // 此处返回String对象，对response进行处理
                 resultword = response.toString();
-                text_convery.speakText(resultword,context_this);
+                text_convery.speakText(resultword,context_this,type);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // 错误时候的回掉方法
-                LogInfo.e("访问错误");
+                LogInfo.e(Constant.TAG,"访问错误");
                 ToastUtils.ShowToast("ERROR",context_this);
             }
         })
@@ -87,6 +89,7 @@ public class VolleyMethod {
                     throws AuthFailureError {
                 HashMap<String,String> hashMap = new HashMap<String,String>();
                 hashMap.put("userwords",words);
+                hashMap.put("type",wordsType);
                 return hashMap;
             }
         };

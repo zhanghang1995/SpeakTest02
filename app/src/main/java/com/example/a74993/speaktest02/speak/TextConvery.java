@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 
+import com.example.a74993.speaktest02.utils.Constant;
 import com.example.a74993.speaktest02.utils.ToastUtils;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechError;
@@ -18,8 +19,10 @@ import com.iflytek.cloud.SynthesizerListener;
 public class TextConvery {
 
     private Context context_this;
+    private SpeakModel speak_model = new SpeakModel();
 
-    public void speakText(String speaktext, Context context){
+    //type表示用户语言种类，0第一次使用服务，1问候 2服务
+    public void speakText(String speaktext, Context context,int type){
 //        Toast.makeText(this,"speak",Toast.LENGTH_SHORT).show();
         //本地合成时，设置传入参数 InitListener
         context_this = context;
@@ -64,7 +67,7 @@ public class TextConvery {
         @Override
         public void onCompleted(SpeechError speechError) {
             if (speechError==null){
-                ToastUtils.ShowToast("播放完成",context_this);
+                speak_model.startSpeech(context_this, Constant.SERVICE_TYPE);
             }else if(speechError!=null){
 
             }
