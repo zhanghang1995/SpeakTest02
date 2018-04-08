@@ -26,13 +26,17 @@ import com.example.a74993.speaktest02.utils.TimeUtils;
 import com.example.a74993.speaktest02.utils.ToastUtils;
 import com.example.a74993.speaktest02.utils.Utils;
 import com.example.a74993.speaktest02.utils.VolleyApplication;
+import com.example.a74993.speaktest02.utils.time.MyTimerTask;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechUtility;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Timer;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    private ThreadUtils threadUtils;
+//    private ThreadUtils threadUtils;
     private Handler handler;
     private String resultword;
     private EditText edit_input;
@@ -46,26 +50,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         initview();
         initspeech();
-        initHandler();
+        initschedule();
+//        initHandler();
     }
 
-    private void initHandler() {
+    private void initschedule() {
+        Timer timer = new Timer();
+        MyTimerTask myTimerTask = new MyTimerTask("default",this);
+        myTimerTask.setName("起床");
         /**
-         * handler类处理线程的消息
+         * 获取当前时间，并设置为当前时间三秒之后的时间
+         *
          */
-        //在这个线程中创建一个handler对象
-          handler=new Handler(){
-            public void handleMessage(Message msg){
-                switch (msg.arg1) {
-                    case 1:
-                        threadUtils.stop();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        };
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+        System.out.println("Current exec time is:"+simpleDateFormat.format(calendar.getTime()));
+		calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DATE),7,0,0);
+        timer.schedule(myTimerTask,calendar.getTime(),62000);
     }
+
+//    private void initHandler() {
+//        /**
+//         * handler类处理线程的消息
+//         */
+//        //在这个线程中创建一个handler对象
+//          handler=new Handler(){
+//            public void handleMessage(Message msg){
+//                switch (msg.arg1) {
+//                    case 1:
+//                        threadUtils.stop();
+//                        break;
+//                    default:
+//                        break;
+//                }
+//            }
+//        };
+//    }
 
     private void initview(){
         setContentView(R.layout.activity_main);
@@ -83,8 +103,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initspeech(){
         SpeechUtility.createUtility(this, SpeechConstant.APPID+"=57bc2bb9");
-        threadUtils = new ThreadUtils(this);
-        threadUtils.start();
+//        threadUtils = new ThreadUtils(this);
+//        threadUtils.start();
     }
 
     @Override
@@ -93,41 +113,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.speak_text:
                 //startSpeechDialog();
                 //ToastUtils.ShowToast(Utils.getUserDeviceID(this),this);
-                speak_model.startSpeech(getApplicationContext(),1);
+                speak_model.startSpeech(getApplicationContext(),10);
 //                VolleyMethod volleyMethod = new VolleyMethod(getApplicationContext());
 //                volleyMethod.teststringPost(Constant.SPEECH_UPLOAD);
                 break;
             case R.id.text_speech:
-                text_convery.speakText(edit_input.getText().toString(),getApplicationContext(),1);
+                text_convery.speakText(edit_input.getText().toString(),getApplicationContext(),1,true);
                 break;
         }
     }
 
 
 
-    public class ThreadUtils extends Thread{
-        private Context context_this;
-        public ThreadUtils(Context context){
-            context_this = context;
-        }
-        @Override
-        public void run() {
-            /**
-             * 用于循环轮播判断
-             */
-            while(true) {
-                if ((TimeUtils.getSystemClockUpper().toString()).equals("17:33")) {
-                    SpeechUpload.upload("晚饭提醒", context_this, 0);
-                    LogInfo.e("当前系统时间", (TimeUtils.getSystemClockUpper().toString().trim()));
-                    LogInfo.e("Thread", "提醒服务");
-                    handler.sendEmptyMessage(1);
-                    break;
-                }else{
-                    LogInfo.e("当前系统时间", (TimeUtils.getSystemClockUpper().toString().trim()));
-                }
-            }
-        }
-    }
+//    public class ThreadUtils extends Thread{
+//        private Context context_this;
+//        public ThreadUtils(Context context){
+//            context_this = context;
+//        }
+//        @Override
+//        public void run() {
+//            /**
+//             * 用于循环轮播判断
+//             */
+//            while(true) {
+//                if ((TimeUtils.getSystemClockUpper().toString()).equals("17:33")) {
+//                    SpeechUpload.upload("晚饭提醒", context_this, 0);
+//                    LogInfo.e("当前系统时间", (TimeUtils.getSystemClockUpper().toString().trim()));
+//                    LogInfo.e("Thread", "提醒服务");
+//                    handler.sendEmptyMessage(1);
+//                    break;
+//                }else{
+//                    LogInfo.e("当前系统时间", (TimeUtils.getSystemClockUpper().toString().trim()));
+//                }
+//            }
+//        }
+//    }
 
 
 }

@@ -6,7 +6,7 @@ package com.example.a74993.speaktest02.utils;
  */
 
 public class Constant {
-    public static int SERVICE_TYPE = 0;
+    public static int SERVICE_TYPE = 2;
     //用于标识当前为第一次使用模式
     public static String RESTOYES = "知道了主人";
     //定义每次的肯定的回复

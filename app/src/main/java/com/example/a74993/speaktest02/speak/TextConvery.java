@@ -19,13 +19,17 @@ import com.iflytek.cloud.SynthesizerListener;
 public class TextConvery {
 
     private Context context_this;
+    private int TYPE;
+    private boolean ISEND;
     private SpeakModel speak_model = new SpeakModel();
 
     //type表示用户语言种类，0第一次使用服务，1问候 2服务
-    public void speakText(String speaktext, Context context,int type){
+    public void speakText(String speaktext, Context context,int type,boolean isend){
 //        Toast.makeText(this,"speak",Toast.LENGTH_SHORT).show();
         //本地合成时，设置传入参数 InitListener
         context_this = context;
+        TYPE = type;
+        ISEND = isend;
         SpeechSynthesizer speechSynthesizer = SpeechSynthesizer.createSynthesizer(context_this,null);
         speechSynthesizer.setParameter(SpeechConstant.VOICE_NAME,"xiaopin");
         speechSynthesizer.setParameter(SpeechConstant.SPEED,"40");
@@ -66,8 +70,8 @@ public class TextConvery {
 
         @Override
         public void onCompleted(SpeechError speechError) {
-            if (speechError==null){
-                speak_model.startSpeech(context_this, Constant.SERVICE_TYPE);
+            if (speechError==null&&!ISEND){
+                speak_model.startSpeech(context_this, TYPE);
             }else if(speechError!=null){
 
             }

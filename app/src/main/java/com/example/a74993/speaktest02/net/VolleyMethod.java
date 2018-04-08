@@ -69,9 +69,19 @@ public class VolleyMethod {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                // 此处返回String对象，对response进行处理
+                // 此处返回String对象，对response进行处理解析
                 resultword = response.toString();
-                text_convery.speakText(resultword,context_this,type);
+
+                if(resultword.contains("a")){
+                    String array[] = resultword.split("a");
+                    if(!array[1].equals("结束")){
+                        text_convery.speakText(array[0],context_this,Integer.parseInt(array[1]),false);
+                    }else{
+                        text_convery.speakText(array[0],context_this,type,true);
+                    }
+                }else{
+                    text_convery.speakText(resultword,context_this,type,false);
+                }
             }
         }, new Response.ErrorListener() {
             @Override

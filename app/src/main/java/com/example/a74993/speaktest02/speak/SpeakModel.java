@@ -57,7 +57,7 @@ public class SpeakModel {
         public void onResult(RecognizerResult results, boolean isLast) {
 
             speakresult = speakresult + JsonParser.parseIatResult(results.getResultString());
-            if(isLast&&TYPE==0){
+            if(isLast){
                 /**
                  * 用户语音的逻辑判断,在后台判断并且返回
                  */
