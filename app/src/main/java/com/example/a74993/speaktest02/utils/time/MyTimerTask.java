@@ -41,7 +41,7 @@ public class MyTimerTask extends TimerTask {
             SpeechUpload.upload("日程安排", context_this, 2);
             LogInfo.e("当前系统时间", (TimeUtils.getSystemClockUpper().toString().trim()));
             LogInfo.e("Thread", "日程安排服务");
-        }else if((TimeUtils.getSystemClockUpper().toString()).equals("12:00")){   //午饭服务
+        }else if((TimeUtils.getSystemClockUpper().toString()).equals("11:42")){   //午饭服务
             SpeechUpload.upload("午饭服务", context_this, 3);
             LogInfo.e("当前系统时间", (TimeUtils.getSystemClockUpper().toString().trim()));
             LogInfo.e("Thread", "午饭服务");
