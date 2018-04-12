@@ -7,6 +7,7 @@ import android.util.LruCache;
 import com.android.volley.toolbox.ImageLoader;
 
 /**
+ * 位图处理类，对图片进行缓存处理操作
  * Created by 74993 on 2018/3/10.
  *
  */

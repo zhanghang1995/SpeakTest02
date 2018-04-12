@@ -21,15 +21,17 @@ public class TextConvery {
     private Context context_this;
     private int TYPE;
     private boolean ISEND;
+    private boolean HASORDER;
     private SpeakModel speak_model = new SpeakModel();
 
     //type表示用户语言种类，0第一次使用服务，1问候 2服务
-    public void speakText(String speaktext, Context context,int type,boolean isend){
+    public void speakText(String speaktext, Context context,int type,boolean isend,boolean hasOrder){
 //        Toast.makeText(this,"speak",Toast.LENGTH_SHORT).show();
         //本地合成时，设置传入参数 InitListener
         context_this = context;
         TYPE = type;
         ISEND = isend;
+        HASORDER = hasOrder;
         SpeechSynthesizer speechSynthesizer = SpeechSynthesizer.createSynthesizer(context_this,null);
         speechSynthesizer.setParameter(SpeechConstant.VOICE_NAME,"xiaopin");
         speechSynthesizer.setParameter(SpeechConstant.SPEED,"40");
@@ -71,9 +73,9 @@ public class TextConvery {
         @Override
         public void onCompleted(SpeechError speechError) {
             if (speechError==null&&!ISEND){
-                speak_model.startSpeech(context_this, TYPE);
+                speak_model.startSpeech(context_this, TYPE,HASORDER);
             }else if(speechError!=null){
-
+                ToastUtils.ShowToast("讲完了",context_this);
             }
         }
 

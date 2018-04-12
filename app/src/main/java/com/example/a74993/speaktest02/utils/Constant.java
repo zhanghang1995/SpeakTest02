@@ -6,8 +6,6 @@ package com.example.a74993.speaktest02.utils;
  */
 
 public class Constant {
-    public static int SERVICE_TYPE = 2;
-    //用于标识当前为第一次使用模式
     public static String RESTOYES = "知道了主人";
     //定义每次的肯定的回复
     public static String USERTABLE = "person";
@@ -36,14 +34,12 @@ public class Constant {
     /**
      * 问答模块
      */
-    //第一次使用问候语
-    public static final String Name = "主人，以后我如何称呼您？";
 
     //用户请求时的TYPE类型请求
-    public static int TYPE_MORNING = 0; //早饭问候
-    public static int TYPE_MORNING_TIME = 1; //早饭时间
-    public static int TYPE_LUNCH = 2; //午饭问候
-    public static int TTYPE_LUNCH_TIME = 3; //午饭时间
-    public static int TYPE_DINNER = 4; //晚饭问候
+    public static int TYPE_GETUP = 0; //起床
+    public static int TYPE_BREAKFAST_TIME = 1; //早饭服务
+    public static int TYPE_ASSIGNMENT = 2; //日程安排
+    public static int TYPE_LUNCH = 3; //午饭服务
+    public static int TYPE_LUNCH_REMIND = 4; //午觉提醒
     public static int TYPE_DINNER_TIME = 5; //晚饭时间
 }

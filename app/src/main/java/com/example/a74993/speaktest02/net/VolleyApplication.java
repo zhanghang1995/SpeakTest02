@@ -1,4 +1,4 @@
-package com.example.a74993.speaktest02.utils;
+package com.example.a74993.speaktest02.net;
 
 import android.app.Application;
 

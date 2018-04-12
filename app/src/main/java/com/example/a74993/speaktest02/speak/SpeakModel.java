@@ -5,12 +5,10 @@ import android.os.Bundle;
 import android.util.Log;
 
 
-import com.example.a74993.speaktest02.MainActivity;
 import com.example.a74993.speaktest02.speak.speak_tackle.SpeechUpload;
 import com.example.a74993.speaktest02.utils.Constant;
 import com.example.a74993.speaktest02.utils.JsonParser;
 import com.example.a74993.speaktest02.utils.ToastUtils;
-import com.example.a74993.speaktest02.utils.Utils;
 import com.iflytek.cloud.RecognizerListener;
 import com.iflytek.cloud.RecognizerResult;
 import com.iflytek.cloud.SpeechConstant;
@@ -26,12 +24,14 @@ public class SpeakModel {
     private String speakresult = "";
     private Context context_this;
     private int TYPE;
+    private boolean HASORDER;
     /**
      *语音识别
      */
-    public void startSpeech(Context context,int type){
+    public void startSpeech(Context context,int type,boolean hasorder){
         TYPE = type;
         context_this  = context;
+        HASORDER = hasorder;
         //1. 创建SpeechRecognizer对象，第二个参数： 本地识别时传 InitListener
         SpeechRecognizer speechRecognizer = SpeechRecognizer.createRecognizer( context, null); //语音识别器
         //2. 设置听写参数，详见《 MSC Reference Manual》 SpeechConstant类
@@ -60,12 +60,12 @@ public class SpeakModel {
             if(isLast){
                 /**
                  * 用户语音的逻辑判断,在后台判断并且返回
-                 */
-                SpeechUpload.upload(speakresult,context_this,TYPE);
+                 **/
+                SpeechUpload.upload(speakresult,context_this,TYPE,HASORDER);
                 speakresult = "";
 //                ToastUtils.ShowToast("手机识别"+speakresult,context_this);
-//                System.out.println(Utils.getDataTime(20180806));
-//               用于调用手机的电话    Utils.intentCallTel(context_this,speakresult);
+//                System.out.println(ToolsUtils.getDataTime(20180806));
+//               用于调用手机的电话    ToolsUtils.intentCallTel(context_this,speakresult);
             }
         }
 

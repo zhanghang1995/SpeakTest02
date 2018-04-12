@@ -21,7 +21,7 @@ import java.util.Locale;
  * Created by 74993 on 2018/3/9.
  */
 
-public class Utils {
+public class ToolsUtils {
     //用户所需要的相关权限
     static final String [] PERMISSIONS = new String[]{
 

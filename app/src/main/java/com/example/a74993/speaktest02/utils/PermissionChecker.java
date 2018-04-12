@@ -5,7 +5,7 @@ import android.content.pm.PackageManager;
 import android.support.v4.content.ContextCompat;
 
 /**
- * 此类用于检查用户权限
+ * 此类用于检查用户权限,用于检查用户权限，如果用户权限未开，需要提醒用户权限开启
  * Created by 74993 on 2018/3/9.
  */
 

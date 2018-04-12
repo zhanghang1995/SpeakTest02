@@ -10,6 +10,11 @@ import android.widget.Toast;
  */
 
 public class ToastUtils {
+    /**
+     * 普通的Toast对话框
+     * @param data
+     * @param context
+     */
     public static void ShowToast(String data, Context context){
         Toast.makeText(context,data, Toast.LENGTH_SHORT).show();
     }

@@ -1,7 +1,9 @@
 package com.example.a74993.speaktest02.model;
 
+import com.example.a74993.speaktest02.db.DbManager;
+
 /**
- * 用户类模块
+ * 用户类模块，定义用户的各种信息
  * Created by 74993 on 2018/3/9.
  */
 

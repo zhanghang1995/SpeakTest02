@@ -27,10 +27,36 @@
             android:text="input the word" />
 
         <Button
-            android:id="@+id/text_speech"
+        android:id="@+id/text_speech"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:text="speak the word" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/add_break"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:text="speak the word" />
+
+            android:text="添加早上时间" />
+
+        <Button
+            android:id="@+id/add_lunch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="添加中午时间" />
+
+        <Button
+            android:id="@+id/add_dinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="添加晚上时间" />
     </LinearLayout>
 </LinearLayout>
