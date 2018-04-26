@@ -6,7 +6,7 @@ import android.util.Log;
 
 
 import com.example.a74993.speaktest02.speak.speak_tackle.SpeechUpload;
-import com.example.a74993.speaktest02.utils.Constant;
+import com.example.a74993.speaktest02.utils.constant.NormalConstant;
 import com.example.a74993.speaktest02.utils.JsonParser;
 import com.example.a74993.speaktest02.utils.ToastUtils;
 import com.iflytek.cloud.RecognizerListener;
@@ -20,15 +20,15 @@ import com.iflytek.cloud.SpeechRecognizer;
  * Created by king on 18/3/8.
  */
 
-public class SpeakModel {
+public class SpeakRecognize {
     private String speakresult = "";
     private Context context_this;
     private int TYPE;
-    private boolean HASORDER;
+    private int HASORDER;
     /**
      *语音识别
      */
-    public void startSpeech(Context context,int type,boolean hasorder){
+    public void startSpeech(Context context,int type,int hasorder){
         TYPE = type;
         context_this  = context;
         HASORDER = hasorder;
@@ -41,7 +41,7 @@ public class SpeakModel {
         speechRecognizer.setParameter(SpeechConstant.RESULT_TYPE,"json");//返回格式
         speechRecognizer.setParameter(SpeechConstant.ENGINE_TYPE,SpeechConstant.TYPE_CLOUD);//听写引擎
         speechRecognizer.setParameter(SpeechConstant.VAD_BOS,"3000");//设置多久不说话，当作超时处理,语音前
-        speechRecognizer.setParameter(SpeechConstant.VAD_EOS,"1");//设置说话后多久不说话，自动停止
+        speechRecognizer.setParameter(SpeechConstant.VAD_EOS,"2");//设置说话后多久不说话，自动停止
         speechRecognizer.setParameter(SpeechConstant.ASR_PTT, "0");//是否动态修正结果， 1为动态
         speechRecognizer.setParameter(SpeechConstant.ASR_DWA, "0");
         //3. 开始听写
@@ -64,8 +64,8 @@ public class SpeakModel {
                 SpeechUpload.upload(speakresult,context_this,TYPE,HASORDER);
                 speakresult = "";
 //                ToastUtils.ShowToast("手机识别"+speakresult,context_this);
-//                System.out.println(ToolsUtils.getDataTime(20180806));
-//               用于调用手机的电话    ToolsUtils.intentCallTel(context_this,speakresult);
+////                System.out.println(ToolsUtils.getDataTime(20180806));
+////               用于调用手机的电话    ToolsUtils.intentCallTel(context_this,speakresult);
             }
         }
 
@@ -73,7 +73,7 @@ public class SpeakModel {
         public void onError(SpeechError error) {
             ToastUtils.ShowToast(error.getPlainDescription(true),context_this);
             // 获取错误码描述
-            Log. e(Constant.TAG, "error.getPlainDescription(true)==" + error.getPlainDescription(true ));
+            Log. e(NormalConstant.TAG, "error.getPlainDescription(true)==" + error.getPlainDescription(true ));
         }
 
         // 开始录音

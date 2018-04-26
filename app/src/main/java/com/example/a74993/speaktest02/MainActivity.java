@@ -8,8 +8,10 @@ import android.widget.EditText;
 
 
 import com.example.a74993.speaktest02.db.DbManager;
-import com.example.a74993.speaktest02.model.UserTime;
-import com.example.a74993.speaktest02.speak.TextConvery;
+import com.example.a74993.speaktest02.speak.SpeakRecognize;
+import com.example.a74993.speaktest02.speak.TextSpeak;
+import com.example.a74993.speaktest02.test.BaiduNlpApiTest;
+import com.example.a74993.speaktest02.test.VolleyTest;
 import com.example.a74993.speaktest02.utils.LogInfo;
 import com.example.a74993.speaktest02.utils.ToastUtils;
 import com.example.a74993.speaktest02.utils.ToolsUtils;
@@ -23,7 +25,6 @@ import java.util.Timer;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private UserTime userTime = new UserTime();
     private DbManager dbManager;
     private EditText edit_input;
     private Button speak;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button add_break;
     private Button add_lunch;
     private Button add_dinner;
-    private TextConvery text_convery = new TextConvery();
+    private TextSpeak text_convery = new TextSpeak();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,15 +46,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //判断初始化时，是否存在当前的用户
         dbManager = new DbManager(this);
         if(!dbManager.queryUser(this)){
-            dbManager.addUser( ToolsUtils.getUserDeviceID(this),"king","8:00","9:00","12:00","18:00");
+            //用户值初始化
+            LogInfo.e("SQLITE","插入新的人员成功");
+            dbManager.addUser( ToolsUtils.getUserDeviceID(this),"king","16:18","16:19","16:20","16:21");
         }
-        //用户值初始化
-        LogInfo.e("SQLITE","插入新的人员成功");
     }
 
     private void initschedule() {
         Timer timer = new Timer();
-        MyTimerTask myTimerTask = new MyTimerTask("default",this,userTime,dbManager);
+        MyTimerTask myTimerTask = new MyTimerTask("king",this,dbManager);
         myTimerTask.setName("起床");
         /**
          * 获取当前时间，并设置为当前时间三秒之后的时间
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
         System.out.println("Current exec time is:"+simpleDateFormat.format(calendar.getTime()));
-		calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DATE),7,0,0);
+        calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DATE),7,0,0);
         timer.schedule(myTimerTask,calendar.getTime(),60000);
     }
 
@@ -86,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }else{
             ToastUtils.ShowToast("请检查您的网络连接",this);
         }
-        initspeech();
+        initschedule();
     }
 
     private void initspeech(){
@@ -97,20 +98,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.speak_text:
-
+                SpeakRecognize speakRecognize = new SpeakRecognize();
+                speakRecognize.startSpeech(this,0,0);
                 break;
             case R.id.text_speech:
-                text_convery.speakText(edit_input.getText().toString(),getApplicationContext(),1,true,false);
+                text_convery.speakText(edit_input.getText().toString(), getApplicationContext(), 1, true, 0);
                 break;
             case R.id.add_break:
-                userTime.setBreak_time(edit_input.getText().toString());
+                VolleyTest.upload(getApplicationContext());
                 break;
             case R.id.add_lunch:
-                userTime.setLunch_time(edit_input.getText().toString());
+                BaiduNlpApiTest.testLexer();
                 break;
             case R.id.add_dinner:
-                userTime.setDinner_time(edit_input.getText().toString());
-                ToastUtils.ShowToast(edit_input.getText().toString(),this);
                 break;
         }
     }

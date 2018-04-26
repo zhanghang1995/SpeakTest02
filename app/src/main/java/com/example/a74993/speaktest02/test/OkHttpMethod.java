@@ -1,10 +1,9 @@
-package com.example.a74993.speaktest02.net;
+package com.example.a74993.speaktest02.test;
 
 import android.os.Environment;
 import android.view.View;
-import android.widget.Toast;
 
-import com.example.a74993.speaktest02.utils.Constant;
+import com.example.a74993.speaktest02.utils.constant.NormalConstant;
 import com.example.a74993.speaktest02.utils.LogInfo;
 
 import java.io.File;
@@ -47,13 +46,13 @@ public class OkHttpMethod {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                LogInfo.e(Constant.TAG,"onFailure"+e.getMessage());
+                LogInfo.e(NormalConstant.TAG,"onFailure"+e.getMessage());
                 e.printStackTrace();
             }
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 System.out.println("TEst");
-                LogInfo.e(Constant.TAG,"onResponse:");
+                LogInfo.e(NormalConstant.TAG,"onResponse:");
                 String responce = response.body().string();
                 //此回掉的方法在子线程里面运行，为了防止进行大文件下载时候对UI线程的阻塞
                 //解决办法，使用Hanlder或者runOnUIthread进行UI线程的更新操作L.e(responce)
@@ -80,7 +79,7 @@ public class OkHttpMethod {
         String bir = Environment.getExternalStorageState();
         File file = new File(bir,"banner2.jpg");
         if(!file.exists()){
-            LogInfo.e(Constant.TAG,file.getAbsolutePath()+"not exist!");
+            LogInfo.e(NormalConstant.TAG,file.getAbsolutePath()+"not exist!");
         }
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/actet-stream"),file);
         //如果MediaType不确定，可以使用application/actet-steam进行代替
@@ -92,7 +91,7 @@ public class OkHttpMethod {
     public void doUpload(View view){
         File file = new File(Environment.getExternalStorageDirectory(),"banner2.jpg");
         if(!file.exists()){
-            LogInfo.e(Constant.TAG,file.getAbsolutePath()+"not exit!");
+            LogInfo.e(NormalConstant.TAG,file.getAbsolutePath()+"not exit!");
             return ;
         }
         //mime type
@@ -123,12 +122,12 @@ public class OkHttpMethod {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                LogInfo.e(Constant.TAG,"onFailure"+e.getMessage());
+                LogInfo.e(NormalConstant.TAG,"onFailure"+e.getMessage());
                 e.printStackTrace();
             }
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                LogInfo.e(Constant.TAG,"onResponse: ");
+                LogInfo.e(NormalConstant.TAG,"onResponse: ");
                 InputStream inputStream = response.body().byteStream();
                 int length = 0;
                 File file = new File(Environment.getExternalStorageDirectory(),"king.jpg");

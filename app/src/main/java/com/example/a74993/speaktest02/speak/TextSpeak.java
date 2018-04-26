@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 
 
-import com.example.a74993.speaktest02.utils.Constant;
 import com.example.a74993.speaktest02.utils.ToastUtils;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechError;
@@ -16,16 +15,16 @@ import com.iflytek.cloud.SynthesizerListener;
  * Created by king on 18/3/8.
  */
 
-public class TextConvery {
+public class TextSpeak {
 
     private Context context_this;
     private int TYPE;
     private boolean ISEND;
-    private boolean HASORDER;
-    private SpeakModel speak_model = new SpeakModel();
+    private int HASORDER;
+    private SpeakRecognize speak_model = new SpeakRecognize();
 
     //type表示用户语言种类，0第一次使用服务，1问候 2服务
-    public void speakText(String speaktext, Context context,int type,boolean isend,boolean hasOrder){
+    public void speakText(String speaktext, Context context,int type,boolean isend, int hasOrder){
 //        Toast.makeText(this,"speak",Toast.LENGTH_SHORT).show();
         //本地合成时，设置传入参数 InitListener
         context_this = context;

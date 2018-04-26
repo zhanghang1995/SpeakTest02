@@ -5,11 +5,6 @@ import android.content.Context;
 import com.example.a74993.speaktest02.db.DbManager;
 import com.example.a74993.speaktest02.model.UserTime;
 import com.example.a74993.speaktest02.speak.speak_tackle.SpeechUpload;
-import com.example.a74993.speaktest02.utils.LogInfo;
-import com.example.a74993.speaktest02.utils.TimeUtils;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.TimerTask;
 
 /**
@@ -23,15 +18,14 @@ public class MyTimerTask extends TimerTask {
      * False:表示没有（default）
      * True：表示有
      */
-    private boolean hasOrder = false;
+    private int hasOrder = 0;
     private String name;
     private Context context_this;
     private UserTime userTime;
     private DbManager dbManager;
-    public MyTimerTask(String inputname, Context context, UserTime time, DbManager db) {
+    public MyTimerTask(String inputname, Context context, DbManager db) {
         context_this = context;
         name = inputname;
-        userTime = time;
         dbManager = db;
     }
     @Override
@@ -42,41 +36,44 @@ public class MyTimerTask extends TimerTask {
          */
         updateAllTime();
         if (name.equals("起床")&&(TimeUtils.getSystemClockUpper().toString()).equals(userTime.getGetup_time())) {
-            SpeechUpload.upload("起床", context_this, 0,false);
+            SpeechUpload.upload("起床", context_this, 0,-1);
             LogInfo.e("当前系统时间", (TimeUtils.getSystemClockUpper().toString().trim()));
             LogInfo.e("Thread", "起床服务");
         }else if((TimeUtils.getSystemClockUpper().toString()).equals(userTime.getBreak_time())){  //早饭服务
             //此处在数据库进行查找操作，如果数据库中存在用户的对应菜名直接提取进行推送服务，不在需要问用户信息
-            if(hasOrder){
-                SpeechUpload.upload("早饭服务", context_this, 1,true);
+            LogInfo.e("早饭服务时间", userTime.getBreak_time());
+            if(hasOrder==1){
+                SpeechUpload.upload("早饭服务", context_this, 1,0);
             }else{
-                SpeechUpload.upload("早饭服务", context_this, 1,false);
+                SpeechUpload.upload("早饭服务", context_this, 1,-1);
             }
             LogInfo.e("当前系统时间", (TimeUtils.getSystemClockUpper().toString().trim()));
             LogInfo.e("Thread", "早饭服务");
         }else if((TimeUtils.getSystemClockUpper().toString()).equals("12:01")){   //日程安排
-            SpeechUpload.upload("日程安排", context_this, 2,false);
+            SpeechUpload.upload("日程安排", context_this, 2,-1);
             LogInfo.e("当前系统时间", (TimeUtils.getSystemClockUpper().toString().trim()));
             LogInfo.e("Thread", "日程安排服务");
         }else if((TimeUtils.getSystemClockUpper().toString()).equals(userTime.getLunch_time())){   //午饭服务
+            LogInfo.e("午饭服务时间", userTime.getLunch_time());
             //此处在数据库进行查找操作，如果数据库中存在用户的对应菜名直接提取进行推送服务，不在需要问用户信息
-            if (hasOrder){
-                SpeechUpload.upload("午饭服务", context_this, 3,true);
+            if (hasOrder==1){
+                SpeechUpload.upload("午饭服务", context_this, 3,0);
             }else{
-                SpeechUpload.upload("午饭服务", context_this, 3,false);
+                SpeechUpload.upload("午饭服务", context_this, 3,-1);
             }
             LogInfo.e("当前系统时间", (TimeUtils.getSystemClockUpper().toString().trim()));
             LogInfo.e("Thread", "午饭服务");
         }else if((TimeUtils.getSystemClockUpper().toString()).equals("12:03")){   //午觉提醒
-            SpeechUpload.upload("午觉提醒", context_this, 4,false);
+            SpeechUpload.upload("午觉提醒", context_this, 4,-1);
             LogInfo.e("当前系统时间", (TimeUtils.getSystemClockUpper().toString().trim()));
             LogInfo.e("Thread", "午觉提醒服务");
         }else if((TimeUtils.getSystemClockUpper().toString()).equals(userTime.getDinner_time())){   //晚饭服务
             //此处在数据库进行查找操作，如果数据库中存在用户的对应菜名直接提取进行推送服务，不在需要问用户信息
-            if (hasOrder) {
-                SpeechUpload.upload("晚饭服务", context_this, 5,true);
+            LogInfo.e("晚饭服务时间", userTime.getDinner_time());
+            if (hasOrder==0) {
+                SpeechUpload.upload("晚饭服务", context_this, 5,0);
             }else {
-                SpeechUpload.upload("晚饭服务", context_this, 5,false);
+                SpeechUpload.upload("晚饭服务", context_this, 5,-1);
             }
             LogInfo.e("当前系统时间", (TimeUtils.getSystemClockUpper().toString().trim()));
             LogInfo.e("Thread", "晚饭服务");
@@ -88,6 +85,7 @@ public class MyTimerTask extends TimerTask {
 
     private void updateAllTime() {
         //用于实时更新数据库中的所有信息
+        userTime = new UserTime();
         userTime.setBreak_time(dbManager.queryTheTime(context_this,1));
         userTime.setLunch_time(dbManager.queryTheTime(context_this,2));
         userTime.setDinner_time(dbManager.queryTheTime(context_this,3));

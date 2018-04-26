@@ -27,6 +27,7 @@
     <!--如需使用人脸识别，还要添加：摄相头权限，拍照需要用到 -->
     <uses-permission android:name="android.permission.CAMERA" />
     <application
+        android:name=".net.volley.utils.VolleyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

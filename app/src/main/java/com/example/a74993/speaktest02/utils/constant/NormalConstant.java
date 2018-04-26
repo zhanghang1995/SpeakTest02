@@ -1,11 +1,27 @@
-package com.example.a74993.speaktest02.utils;
+package com.example.a74993.speaktest02.utils.constant;
 
 /**
  * 定义所有参数的常量
  * Created by king on 18/3/8.
  */
 
-public class Constant {
+public class NormalConstant {
+    /**
+     * 百度自然语言处理的参数
+     * App_Id
+     * API_Key
+     * Secret_Key
+     * 通过以上三个参数调用A=javaSDK，获取access_token进行相关业务
+     *
+     */
+    public static String API_ID = "11129394";
+    public static String API_KEY = "TDPEHEMm69SOKLTZQYy0b3mN";
+    public static String SECRET_KEY = "B74mbCEngEiGZQN0bUORc2RPBxRUQBjh";
+
+
+
+
+
     public static String RESTOYES = "知道了主人";
     //定义每次的肯定的回复
     public static String USERTABLE = "person";

@@ -1,10 +1,11 @@
-package com.example.a74993.speaktest02.utils;
+package com.example.a74993.speaktest02.net.volley.utils;
 
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.util.LruCache;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.example.a74993.speaktest02.utils.KaleApplicatipon;
 
 /**
  * 位图处理类，对图片进行缓存处理操作
@@ -12,13 +13,12 @@ import com.android.volley.toolbox.ImageLoader;
  *
  */
 
-public class BitmapCache implements ImageLoader.ImageCache {
+public class VolleyBitmapCache implements ImageLoader.ImageCache {
     private KaleApplicatipon kaleApplicatipon = new KaleApplicatipon();
     //初始化LruCache 定义cache的大小，官方推荐的cache大小为当前app可用内存的八分之一
     //final int memoryClass = ((ActivityManager)getSystemService(Context.ACTIVITY_SERVICE)).getMemoryClass(); 获取当前app的内存
-
     private LruCache<String,Bitmap> cache; //内存缓存初始化，针对hashMap Key-Value
-    public BitmapCache(){
+    public VolleyBitmapCache(){
         cache = new LruCache<String,Bitmap>(kaleApplicatipon.getMemoryCacheSize()){
             @Override
             protected int sizeOf(String key, Bitmap value) {
@@ -27,11 +27,14 @@ public class BitmapCache implements ImageLoader.ImageCache {
             }
         };
     }
+
+    //获得
     @Override
-    public Bitmap getBitmap(String s) {
-        return cache.get(s);
+    public Bitmap getBitmap(String url) {
+        return cache.get(url);
     }
 
+    //设置
     @Override
     public void putBitmap(String s, Bitmap bitmap) {
         cache.put(s,bitmap);
