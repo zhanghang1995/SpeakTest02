@@ -13,7 +13,9 @@ public class AccessToken {
     /**
      * access_token失效日期
      */
+
     private int expiresIn;
+
     private String json;
 
     public String getAccessToken() {
