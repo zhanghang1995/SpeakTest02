@@ -6,8 +6,9 @@ package com.example.a74993.speaktest02.baidunlp.model;
  */
 
 public class ResponseResult {
+    //请求随机标识码，随机数，唯一
     private long logId;
-
+    //请求返回json字符串
     public String jsonRes;
 
     public long getLogId() {

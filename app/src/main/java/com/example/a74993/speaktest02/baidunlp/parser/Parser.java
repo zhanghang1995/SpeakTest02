@@ -3,7 +3,7 @@
  */
 package com.example.a74993.speaktest02.baidunlp.parser;
 
-import com.baidu.aip.unit.exception.UnitError;
+
 import com.example.a74993.speaktest02.baidunlp.exception.UnitError;
 
 /**

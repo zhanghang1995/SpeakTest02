@@ -17,6 +17,13 @@ public class NormalConstant {
     public static String API_ID = "11129394";
     public static String API_KEY = "TDPEHEMm69SOKLTZQYy0b3mN";
     public static String SECRET_KEY = "B74mbCEngEiGZQN0bUORc2RPBxRUQBjh";
+    /**
+     * 定义UNIT相关场景的名称消息
+     */
+    public static final int SCENE_PLAY_BOT = 1696;
+
+
+
 
 
 
